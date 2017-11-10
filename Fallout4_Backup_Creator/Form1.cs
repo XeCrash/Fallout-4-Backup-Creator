@@ -53,22 +53,29 @@ namespace Fallout4_Backup_Creator
                 Text = $"Fallout 4 Backup Creator | Build: {Build} | OS: {OSBuild.ToString()} 32bit OS";
             }
             tb_SourcePath.Text = GrabPath().ToString();
-            tb_InstalledPath.Text = GrabPath().ToString();
-            if (Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Overseer (TrueType)", "").ToString() == "Overseer.otf")
+            tb_InstalledPath.Text = tb_SourcePath.Text;
+            try
             {
-                Console.WriteLine("Font is already installed");
-            }
-            else
-            {
-                if (File.Exists(Directory.GetCurrentDirectory() + @"Resources\Overseer.otf"))
+                if (Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Overseer (TrueType)", "").ToString() == "Overseer.otf")
                 {
-                    RegisterFont("Overseer.otf");
-                    Console.WriteLine("Font Installed");
+                    Console.WriteLine("Font is already installed");
                 }
                 else
                 {
+                    if (File.Exists(Directory.GetCurrentDirectory() + @"\Resources\Overseer.otf"))
+                    {
+                        RegisterFont("Overseer.otf");
+                        Console.WriteLine("Font Installed");
+                    }
+                    else
+                    {
 
+                    }
                 }
+            }
+            catch(Exception error)
+            {
+                
             }
         }
 
@@ -76,13 +83,29 @@ namespace Fallout4_Backup_Creator
         {
             if (Environment.Is64BitOperatingSystem)
             {
-                object DefaultInstallPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Bethesda Softworks\Fallout4", "Installed Path", "Unable to retrieve file path to Fallout 4. Please select the path where Fallout 4 is installed.");
-                return DefaultInstallPath.ToString();
+                try
+                {
+                    object DefaultInstallPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Bethesda Softworks\Fallout4", "Installed Path", "Unable to retrieve file path to Fallout 4. Please select the path where Fallout 4 is installed.");
+                    return DefaultInstallPath.ToString();
+                }
+                catch
+                {
+                    MessageBox.Show("it seems that Fallout 4 isnt installed.", "Fallout 4 Backup Creator", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return "";
+                }
             }
             else
             {
-                object DefaultInstallPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Bethesda Softworks\Fallout4", "Installed Path", "Unable to retrieve file path to Fallout 4. Please select the path where Fallout 4 is installed.");
-                return DefaultInstallPath.ToString();
+                try
+                {
+                    object DefaultInstallPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Bethesda Softworks\Fallout4", "Installed Path", "Unable to retrieve file path to Fallout 4. Please select the path where Fallout 4 is installed.");
+                    return DefaultInstallPath.ToString();
+                }
+                catch
+                {
+                    MessageBox.Show("it seems that Fallout 4 isnt installed.", "Fallout 4 Backup Creator", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return "";
+                }
             }
         }
 
@@ -156,11 +179,31 @@ namespace Fallout4_Backup_Creator
         {
             if (!backgroundWorker1.IsBusy)
             {
-
-                backgroundWorker1.RunWorkerAsync();
-                button3.Text = "Cancel Backup Process";
-                isBusy = true;
-                cancelFlag = false;
+                if (tb_SourcePath.Text != string.Empty || tb_DestinationPath.Text != string.Empty)
+                {
+                    if (tb_DestinationPath.Text != string.Empty)
+                    {
+                        backgroundWorker1.RunWorkerAsync();
+                        button3.Text = "Cancel Backup Process";
+                        isBusy = true;
+                        cancelFlag = false;
+                    }
+                }
+                else
+                {
+                    if (tb_SourcePath.Text == string.Empty && tb_DestinationPath.Text == string.Empty)
+                    {
+                        MessageBox.Show("The source & destination path can not be empty.", "Fallout 4 Backup Creator", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else if(tb_SourcePath.Text == string.Empty)
+                    {
+                        MessageBox.Show("The source path can not be empty.", "Fallout 4 Backup Creator", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else if(tb_DestinationPath.Text == string.Empty)
+                    {
+                        MessageBox.Show("The destination path can not be empty.", "Fallout 4 Backup Creator", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
             else
             {
@@ -200,12 +243,7 @@ namespace Fallout4_Backup_Creator
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            //int fCount = Directory.GetFiles(tb_SourcePath.Text, "*", SearchOption.AllDirectories).Length;
             progressBar1.Value = e.ProgressPercentage;
-            //Console.WriteLine("Progress Precentage = " + e.ProgressPercentage);
-            //label4.Text = String.Format(@"Copying File: {0} out of {1}", FileCount, fCount);
-            //label3.Text = String.Format("{0:P2}", ((double)FileCount / (double)fCount));
-            //label5.Text = String.Format(@"Now Copying: {0} ({1})", FileName, FormatBytes(FileSize));
         }
 
         private void BackgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -329,17 +367,31 @@ namespace Fallout4_Backup_Creator
         {
             if (Environment.Is64BitOperatingSystem)
             {
-                Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Bethesda Softworks\Fallout4", "Installed Path", tb_InstalledPath.Text);
-                MessageBox.Show("The Installed path has been successfully changed in the Registry!", "Fallout 4 Backup Creator", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                tb_SourcePath.Text = GrabPath().ToString();
-                tb_InstalledPath.Text = GrabPath().ToString();
+                if (tb_InstalledPath.Text != String.Empty)
+                {
+                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Bethesda Softworks\Fallout4", "Installed Path", tb_InstalledPath.Text);
+                    MessageBox.Show("The Installed path has been successfully changed in the Registry!", "Fallout 4 Backup Creator", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    tb_SourcePath.Text = GrabPath().ToString();
+                    tb_InstalledPath.Text = GrabPath().ToString();
+                }
+                else
+                {
+                    MessageBox.Show("The install path can not be empty.", "Fallout 4 Backup Creator", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
-                Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Bethesda Softworks\Fallout4", "Installed Path", tb_InstalledPath.Text);
-                MessageBox.Show("The Installed path has been successfully changed in the Registry!", "Fallout 4 Backup Creator", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                tb_SourcePath.Text = GrabPath().ToString();
-                tb_InstalledPath.Text = GrabPath().ToString();
+                if (tb_InstalledPath.Text != String.Empty)
+                {
+                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Bethesda Softworks\Fallout4", "Installed Path", tb_InstalledPath.Text);
+                    MessageBox.Show("The Installed path has been successfully changed in the Registry!", "Fallout 4 Backup Creator", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    tb_SourcePath.Text = GrabPath().ToString();
+                    tb_InstalledPath.Text = GrabPath().ToString();
+                }
+                else
+                {
+                    MessageBox.Show("The install path can not be empty.", "Fallout 4 Backup Creator", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 

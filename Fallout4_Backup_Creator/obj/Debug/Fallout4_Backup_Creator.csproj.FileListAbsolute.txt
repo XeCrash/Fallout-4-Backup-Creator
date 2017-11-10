@@ -10,3 +10,15 @@ C:\Users\User\source\repos\Fallout 4 Backup Creator\Fallout4_Backup_Creator\obj\
 C:\Users\User\source\repos\Fallout 4 Backup Creator\Fallout4_Backup_Creator\bin\Debug\Resources\Overseer.otf
 C:\Users\User\source\repos\Fallout 4 Backup Creator\Fallout4_Backup_Creator\obj\Debug\Fallout4_Backup_Creator.csprojResolveAssemblyReference.cache
 C:\Users\User\source\repos\Fallout 4 Backup Creator\Fallout4_Backup_Creator\obj\Debug\Fallout4_Backup_Creator.Credits.resources
+C:\Users\Avery\Documents\GitHub\Fallout-4-Backup-Creator\Fallout4_Backup_Creator\bin\Debug\Resources\Overseer.otf
+C:\Users\Avery\Documents\GitHub\Fallout-4-Backup-Creator\Fallout4_Backup_Creator\bin\Debug\Fallout4_Backup_Creator.exe.config
+C:\Users\Avery\Documents\GitHub\Fallout-4-Backup-Creator\Fallout4_Backup_Creator\bin\Debug\Fallout4_Backup_Creator.exe
+C:\Users\Avery\Documents\GitHub\Fallout-4-Backup-Creator\Fallout4_Backup_Creator\bin\Debug\Fallout4_Backup_Creator.pdb
+C:\Users\Avery\Documents\GitHub\Fallout-4-Backup-Creator\Fallout4_Backup_Creator\obj\Debug\Fallout4_Backup_Creator.csprojResolveAssemblyReference.cache
+C:\Users\Avery\Documents\GitHub\Fallout-4-Backup-Creator\Fallout4_Backup_Creator\obj\Debug\Fallout4_Backup_Creator.Credits.resources
+C:\Users\Avery\Documents\GitHub\Fallout-4-Backup-Creator\Fallout4_Backup_Creator\obj\Debug\Fallout4_Backup_Creator.Form1.resources
+C:\Users\Avery\Documents\GitHub\Fallout-4-Backup-Creator\Fallout4_Backup_Creator\obj\Debug\Fallout4_Backup_Creator.Properties.Resources.resources
+C:\Users\Avery\Documents\GitHub\Fallout-4-Backup-Creator\Fallout4_Backup_Creator\obj\Debug\Fallout4_Backup_Creator.csproj.GenerateResource.Cache
+C:\Users\Avery\Documents\GitHub\Fallout-4-Backup-Creator\Fallout4_Backup_Creator\obj\Debug\Fallout4_Backup_Creator.csproj.CoreCompileInputs.cache
+C:\Users\Avery\Documents\GitHub\Fallout-4-Backup-Creator\Fallout4_Backup_Creator\obj\Debug\Fallout4_Backup_Creator.exe
+C:\Users\Avery\Documents\GitHub\Fallout-4-Backup-Creator\Fallout4_Backup_Creator\obj\Debug\Fallout4_Backup_Creator.pdb
